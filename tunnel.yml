@@ -1,0 +1,7 @@
+tunnel: n8n-tunnel
+credentials-file: /Users/gislainmoreira/.cloudflared/n8n-tunnel.json
+
+ingress:
+  - hostname: ${N8N_DOMAIN}
+    service: http://localhost:5678
+  - service: http_status:404

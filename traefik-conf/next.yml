@@ -1,0 +1,32 @@
+http:
+  routers:
+    next:
+      rule: Host(`${NEXT_DOMAIN}`)
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: le
+      service: next-svc
+      middlewares:
+        - sec
+        - rl
+
+  services:
+    next-svc:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:3000"  # Next.js lancé en local
+
+  middlewares:
+    sec:
+      headers:
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        forceSTSHeader: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        frameDeny: true
+    rl:
+      rateLimit:
+        average: 100
+        burst: 200

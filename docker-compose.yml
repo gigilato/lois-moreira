@@ -107,6 +107,7 @@ services:
       WORDPRESS_DB_NAME: wordpress
     volumes:
       - wp_storage:/var/www/html
+      - ./php-uploads.ini:/usr/local/etc/php/conf.d/zzz-uploads.ini:ro
     labels:
       - traefik.enable=true
       - traefik.http.routers.wordpress.rule=Host(`${BASE_DOMAIN}`) || Host(`${WP_DOMAIN}`)
